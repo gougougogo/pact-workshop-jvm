@@ -18,27 +18,24 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 public class ClientTest {
-
   @Rule
   public WireMockRule wireMockRule = new WireMockRule(8080);
 
   @Test
   public void canProcessTheJsonPayloadFromTheProvider() throws UnirestException {
 
-    String date = "2013-08-16T15:31:20+10:00";
-
-    stubFor(get(urlPathEqualTo("/provider.json"))
-      .withQueryParam("validDate", matching(".+"))
-      .willReturn(aResponse()
-        .withStatus(200)
-        .withHeader("Content-Type", "application/json")
-        .withBody("{\"test\": \"NO\", \"date\": \"" + date + "\", \"count\": 100}")));
+  String date = "2018-08-28T14:55:22.000+00:00";
+  stubFor(get(urlPathEqualTo("/provider.json"))
+  .withQueryParam("validDate", matching(".+"))
+  .willReturn(aResponse()
+    .withStatus(200)
+    .withHeader("Content-Type", "application/json")
+    .withBody("{\"test\": \"NO\", \"date\": \"" + date + "\", \"count\": 100}")));
 
     List<Object> data = new Client().fetchAndProcessData();
-
-    assertThat(data, hasSize(2));
-    assertThat(data.get(0), is(1));
-    assertThat(data.get(1), is(ZonedDateTime.parse(date)));
+  
+  assertThat(data, hasSize(2));
+  assertThat(data.get(0), is(1));
+  assertThat(data.get(1), is(ZonedDateTime.parse(date)));
   }
-
 }
