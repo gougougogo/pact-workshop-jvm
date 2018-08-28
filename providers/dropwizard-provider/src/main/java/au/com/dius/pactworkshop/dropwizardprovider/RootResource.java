@@ -20,7 +20,7 @@ public class RootResource {
     LocalDateTime validTime = LocalDateTime.parse(validDate.get());
     Map<String, Serializable> result = new HashMap<>(3);
     result.put("test", "NO");
-    result.put("validDate", LocalDateTime.now().toString());
+    result.put("validDate", validTime);
     result.put("count", 1000);
     return result;
   }

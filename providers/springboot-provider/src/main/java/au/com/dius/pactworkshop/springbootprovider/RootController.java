@@ -17,7 +17,7 @@ public class RootController {
     LocalDateTime validTime = LocalDateTime.parse(validDate);
     Map<String, Serializable> map = new HashMap<>(3);
     map.put("test", "NO");
-    map.put("validDate", LocalDateTime.now().toString());
+    map.put("validDate", validTime);
     map.put("count", 1000);
     return map;
   }
