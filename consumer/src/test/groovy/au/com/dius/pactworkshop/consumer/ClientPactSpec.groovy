@@ -92,4 +92,23 @@ class ClientPactSpec extends Specification {
     pactResult == PactVerificationResult.Ok.INSTANCE
   }
 
+  def 'handle an character date parameter'(){
+    given:
+    provider{
+      given('data count > 0')
+      uponReceiving('a qequest with an character date parameter')
+      withAttributes(path:'/provider.json',query:[validDate:'!@#@!#@#!#!@#'])
+      willRespondWith(status:400,body:$/{"error": "'!@#@!#@#!#!@#' is not a date"}/$, headers: ['Content-Type': 'application/json'])
+    }
+
+    when:
+    def result
+    PactVerificationResult pactResult = provider.runTest{
+      result = client.fetchAndProcessData('!@#@!#@#!#!@#')
+    }
+
+    then:
+    pactResult == PactVerificationResult.Ok.INSTANCE
+  }
+
 }
